@@ -23,7 +23,7 @@ import (
 	"net/http"
 )
 
-const baseURL = "https://wttr.in/"
+const baseURL = "http://wttr.in/"
 
 // GetWttr writes weather information from wttr.in/ to io.Writer.
 func GetWttr(language, location, pathToPng string, w io.Writer) error {
