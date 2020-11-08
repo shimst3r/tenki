@@ -1,4 +1,6 @@
 // Package cmd implements the CLI for tenki.
+package cmd
+
 /*
 Copyright © 2020 Nils Müller <shimst3r@gmail.com>
 
@@ -14,7 +16,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package cmd
 
 import (
 	"fmt"
@@ -34,12 +35,23 @@ var PathToPng string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "tenki",
+	Use:   "tenki [--language language] [--location location] [--path-to-png path/to/png] [--help] ",
 	Short: "A command-line interface for wttr.in/",
 	Long: `Tenki is a CLI for querying weather information from wttr.in/ endpoints.
 
 Users can define their location based on various query parameters including
-location, nearest point-of-interest, nearest airport, or public domain name.`,
+location, nearest point-of-interest, nearest airport, or public domain name.
+
+Supported location types:
+
+    /paris                  # city name
+    /~Eiffel+tower          # any location (+ for spaces)
+    /Москва                 # Unicode name of any location in any language
+    /muc                    # airport code (3 letters)
+    /@stackoverflow.com     # domain name
+    /94107                  # area codes
+    /-78.46,106.79          # GPS coordinates`,
+	Run: GetWeather,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -52,25 +64,7 @@ func Execute() {
 }
 
 func init() {
-	cmdGet := &cobra.Command{
-		Use:   "get [--location location] [--png path/to/png]",
-		Short: "Query weather information",
-		Long: `Query weather information either for your default location or for a specific one.
-		
-Supported location types:
-
-    /paris                  # city name
-    /~Eiffel+tower          # any location (+ for spaces)
-    /Москва                 # Unicode name of any location in any language
-    /muc                    # airport code (3 letters)
-    /@stackoverflow.com     # domain name
-    /94107                  # area codes
-    /-78.46,106.79          # GPS coordinates`,
-		Run: GetWeather,
-	}
-	cmdGet.Flags().StringVar(&PathToPng, "path-to-png", "", "Location to store PNG output")
-	cmdGet.Flags().StringVar(&Location, "location", "", "Query location")
-
 	rootCmd.PersistentFlags().StringVar(&Language, "language", "en", "Language to generate output in")
-	rootCmd.AddCommand(cmdGet)
+	rootCmd.PersistentFlags().StringVar(&Location, "location", "", "Query location")
+	rootCmd.PersistentFlags().StringVar(&PathToPng, "path-to-png", "", "Location to store PNG output")
 }
