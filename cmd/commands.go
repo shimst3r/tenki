@@ -36,7 +36,7 @@ func GetWeather(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 	}
-	err = lib.GetWttr(Language, Location, PathToPng, writer)
+	err = lib.GetWttr(Language, Location, PathToPng, UnitOfMeasurement, writer)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

@@ -26,9 +26,12 @@ import (
 const baseURL = "http://wttr.in/"
 
 // GetWttr writes weather information from wttr.in/ to io.Writer.
-func GetWttr(language, location, pathToPng string, w io.Writer) error {
+func GetWttr(language, location, pathToPng string, unit Unit, w io.Writer) error {
 	client := &http.Client{}
 	url := baseURL + location
+	if unit.symbol != "" {
+		url = url + "?" + unit.symbol
+	}
 	if pathToPng != "" {
 		url = url + ".png"
 	}
