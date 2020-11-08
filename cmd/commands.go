@@ -1,4 +1,6 @@
 // Package cmd implements the CLI for tenki.
+package cmd
+
 /*
 Copyright © 2020 Nils Müller <shimst3r@gmail.com>
 
@@ -14,7 +16,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package cmd
 
 import (
 	"fmt"
@@ -28,7 +29,6 @@ import (
 func GetWeather(cmd *cobra.Command, args []string) {
 	var err error
 	writer := os.Stdout
-
 	if PathToPng != "" {
 		writer, err = os.Create(PathToPng)
 		if err != nil {
