@@ -7,15 +7,47 @@ tenki is a command-line client for [wttr.in](https://wttr.in/) written in Go, us
 ## Usage Examples
 
 ```shell
+$ ./tenki --help
+Tenki is a CLI for querying weather information from wttr.in/ endpoints.
+
+Users can define their location based on various query parameters including
+location, nearest point-of-interest, nearest airport, or public domain name.
+
+Usage:
+  tenki [command]
+
+Available Commands:
+  get         Query weather information
+  help        Help about any command
+
+Flags:
+  -h, --help              help for tenki
+      --language string   Language to generate output in (default "en")
+
+Use "tenki [command] --help" for more information about a command.
+```
+
+```shell
 $ ./tenki get --help
 Query weather information either for your default location or for a specific one.
 
+Supported location types:
+
+    /paris                  # city name
+    /~Eiffel+tower          # any location (+ for spaces)
+    /Москва                 # Unicode name of any location in any language
+    /muc                    # airport code (3 letters)
+    /@stackoverflow.com     # domain name
+    /94107                  # area codes
+    /-78.46,106.79          # GPS coordinates
+
 Usage:
-  tenki get [--location location] [flags]
+  tenki get [--location location] [--png path/to/png] [flags]
 
 Flags:
-  -h, --help              help for get
-      --location string   Query location
+  -h, --help                 help for get
+      --location string      Query location
+      --path-to-png string   Location to store PNG output
 
 Global Flags:
       --language string   Language to generate output in (default "en")
@@ -63,44 +95,12 @@ Prévisions météo pour: Kyoto
 Emplacement: 京都市, 京都府, 日本 [35.0185804,135.763835]
 ```
 
-```shell
-./tenki get --location ~Tokyo-Skytree
-Weather report: Tokyo-Skytree
+tenki also lets you store colored output as PNG, using the `--path-to-png` flag. It can be combined with any language or location specification, e.g.
 
-                Shower in vicinity
-       .--.     20 °C          
-    .-(    ).   ↑ 9 km/h       
-   (___.__)__)  10 km          
-                0.1 mm         
-                                                       ┌─────────────┐                                                       
-┌──────────────────────────────┬───────────────────────┤  Sat 07 Nov ├───────────────────────┬──────────────────────────────┐
-│            Morning           │             Noon      └──────┬──────┘     Evening           │             Night            │
-├──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
-│    \  /       Partly cloudy  │    \  /       Partly cloudy  │    \  /       Partly cloudy  │    \  /       Partly cloudy  │
-│  _ /"".-.     18 °C          │  _ /"".-.     21 °C          │  _ /"".-.     22 °C          │  _ /"".-.     21 °C          │
-│    \_(   ).   ↘ 6 km/h       │    \_(   ).   ↗ 7-8 km/h     │    \_(   ).   ↗ 18-25 km/h   │    \_(   ).   → 10-13 km/h   │
-│    /(___(__)  10 km          │    /(___(__)  10 km          │    /(___(__)  10 km          │    /(___(__)  10 km          │
-│               0.0 mm | 0%    │               0.0 mm | 0%    │               0.0 mm | 0%    │               0.0 mm | 0%    │
-└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
-                                                       ┌─────────────┐                                                       
-┌──────────────────────────────┬───────────────────────┤  Sun 08 Nov ├───────────────────────┬──────────────────────────────┐
-│            Morning           │             Noon      └──────┬──────┘     Evening           │             Night            │
-├──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
-│    \  /       Partly cloudy  │    \  /       Partly cloudy  │  _`/"".-.     Patchy rain po…│  _`/"".-.     Patchy rain po…│
-│  _ /"".-.     21 °C          │  _ /"".-.     22 °C          │   ,\_(   ).   20 °C          │   ,\_(   ).   19 °C          │
-│    \_(   ).   ↓ 5-6 km/h     │    \_(   ).   ↙ 4-5 km/h     │    /(___(__)  ← 16-19 km/h   │    /(___(__)  ↘ 14-18 km/h   │
-│    /(___(__)  10 km          │    /(___(__)  10 km          │      ‘ ‘ ‘ ‘  10 km          │      ‘ ‘ ‘ ‘  9 km           │
-│               0.0 mm | 0%    │               0.0 mm | 0%    │     ‘ ‘ ‘ ‘   0.1 mm | 87%   │     ‘ ‘ ‘ ‘   0.7 mm | 76%   │
-└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
-                                                       ┌─────────────┐                                                       
-┌──────────────────────────────┬───────────────────────┤  Mon 09 Nov ├───────────────────────┬──────────────────────────────┐
-│            Morning           │             Noon      └──────┬──────┘     Evening           │             Night            │
-├──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
-│               Cloudy         │    \  /       Partly cloudy  │    \  /       Partly cloudy  │               Overcast       │
-│      .--.     14..15 °C      │  _ /"".-.     16 °C          │  _ /"".-.     16 °C          │      .--.     16 °C          │
-│   .-(    ).   ↓ 18-21 km/h   │    \_(   ).   ↓ 13-15 km/h   │    \_(   ).   ↖ 15-18 km/h   │   .-(    ).   ↓ 5 km/h       │
-│  (___.__)__)  10 km          │    /(___(__)  10 km          │    /(___(__)  10 km          │  (___.__)__)  10 km          │
-│               0.0 mm | 0%    │               0.0 mm | 0%    │               0.0 mm | 0%    │               0.0 mm | 0%    │
-└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
-Location: 東京スカイツリー, 13, 1F, 錦糸, 江東橋2, 東京都, 墨田区, 131-0045, 日本 (Japan) [35.71005425,139.81071409992649]
+```shell
+$ ./tenki get --location ~Tokyo+Skytree --language de --path-to-png ./examples/TokyoSkytree.png
 ```
+
+produces the following image:
+
+![Weather at Tokyo Skytree in German](./examples/TokyoSkytree.png)
