@@ -1,3 +1,4 @@
+// Package cmd implements the CLI for tenki.
 /*
 Copyright © 2020 Nils Müller <shimst3r@gmail.com>
 
@@ -19,13 +20,17 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/shimst3r/tenki/lib"
 	"github.com/spf13/cobra"
 )
 
-var cfgFile string
-var language string
-var location string
+// Language determines the output language.
+var Language string
+
+// Location determines the location to query weather information for.
+var Location string
+
+// PathToPng determines the path in which to save output as PNG.
+var PathToPng string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -48,15 +53,24 @@ func Execute() {
 
 func init() {
 	cmdGet := &cobra.Command{
-		Use:   "get [--location location]",
+		Use:   "get [--location location] [--png path/to/png]",
 		Short: "Query weather information",
-		Long:  "Query weather information either for your default location or for a specific one.",
-		Run: func(cmd *cobra.Command, args []string) {
-			lib.GetWeather(language, location, os.Stdout)
-		},
-	}
-	cmdGet.Flags().StringVar(&location, "location", "", "Query location")
+		Long: `Query weather information either for your default location or for a specific one.
+		
+Supported location types:
 
-	rootCmd.PersistentFlags().StringVar(&language, "language", "en", "Language to generate output in")
+    /paris                  # city name
+    /~Eiffel+tower          # any location (+ for spaces)
+    /Москва                 # Unicode name of any location in any language
+    /muc                    # airport code (3 letters)
+    /@stackoverflow.com     # domain name
+    /94107                  # area codes
+    /-78.46,106.79          # GPS coordinates`,
+		Run: GetWeather,
+	}
+	cmdGet.Flags().StringVar(&PathToPng, "path-to-png", "", "Location to store PNG output")
+	cmdGet.Flags().StringVar(&Location, "location", "", "Query location")
+
+	rootCmd.PersistentFlags().StringVar(&Language, "language", "en", "Language to generate output in")
 	rootCmd.AddCommand(cmdGet)
 }
