@@ -84,3 +84,23 @@ $ ./tenki --location ~Tokyo+Skytree --language de --path-to-png ./examples/Tokyo
 produces the following image:
 
 ![Weather at Tokyo Skytree in German](./examples/TokyoSkytree.png)
+
+## Run with Docker
+
+The project has a minimal [Dockerfile](./Dockerfile) that takes care of building and running the binary for you. You can build it with
+
+```shell
+docker build -t tenki .
+```
+
+If you want to print the output to STDOUT, using the Docker image is straightfoward:
+
+```shell
+docker run tenki --location $LOCATION --language $LANGUAGE
+```
+
+If you want to print the output to PNG, you have to use a [bind mount](https://docs.docker.com/storage/bind-mounts/) like so:
+
+```shell
+docker run --mount type=bind,source="$(pwd)"/examples,target=/examples tenki --location Hiroshima --language de --path-to-png ./examples/Hiroshima.png
+```
