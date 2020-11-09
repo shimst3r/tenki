@@ -23,6 +23,12 @@ Supported location types:
     /94107                  # area codes
     /-78.46,106.79          # GPS coordinates
 
+Supported units of measurement:
+
+    m                       # metric (SI) (used by default everywhere except US)
+    u                       # USCS (used by default in US)
+    M                       # show wind speed in m/s
+
 Usage:
   tenki [--language language] [--location location] [--path-to-png path/to/png] [--help]  [flags]
 
