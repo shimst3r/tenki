@@ -4,6 +4,20 @@
 
 tenki is a command-line client for [wttr.in](https://wttr.in/) written in Go, using the [Cobra](https://github.com/spf13/cobra) library.
 
+## Installation
+
+Install [Go](https://golang.org/doc/install) on your system and add `$GOPATH/bin` to your `$PATH`. Then you can install tenki via
+
+```shell
+go get github.com/shimst3r/tenki
+```
+
+and verify its installation with
+
+```shell
+tenki --help
+```
+
 ## Usage Examples
 
 ```shell
