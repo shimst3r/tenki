@@ -39,7 +39,7 @@ var UnitOfMeasurement lib.Unit
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "tenki [--language language] [--location location] [--path-to-png path/to/png] [--help] ",
+	Use:   "tenki",
 	Short: "A command-line interface for wttr.in/",
 	Long: `Tenki is a CLI for querying weather information from wttr.in/ endpoints.
 
@@ -54,7 +54,13 @@ Supported location types:
     /muc                    # airport code (3 letters)
     /@stackoverflow.com     # domain name
     /94107                  # area codes
-    /-78.46,106.79          # GPS coordinates`,
+    /-78.46,106.79          # GPS coordinates
+
+Supported units of measurement:
+
+    m                       # metric (SI) (used by default everywhere except US)
+    u                       # USCS (used by default in US)
+    M                       # show wind speed in m/s`,
 	Run: GetWeather,
 }
 
