@@ -41,6 +41,7 @@ func (u *Unit) Set(symbol string) error {
 }
 
 // Type is part of the pflag.Value interface.
+// TODO: Understand what this method does and implement it accordingly. 🤔
 func (u *Unit) Type() string {
 	return ""
 }
