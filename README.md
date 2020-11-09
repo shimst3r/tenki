@@ -4,6 +4,20 @@
 
 tenki is a command-line client for [wttr.in](https://wttr.in/) written in Go, using the [Cobra](https://github.com/spf13/cobra) library.
 
+## Installation
+
+Install [Go](https://golang.org/doc/install) on your system and add `$GOPATH/bin` to your `$PATH`. Then you can install tenki via
+
+```shell
+go get github.com/shimst3r/tenki
+```
+
+and verify its installation with
+
+```shell
+tenki --help
+```
+
 ## Usage Examples
 
 ```shell
@@ -22,6 +36,12 @@ Supported location types:
     /@stackoverflow.com     # domain name
     /94107                  # area codes
     /-78.46,106.79          # GPS coordinates
+
+Supported units of measurement:
+
+    m                       # metric (SI) (used by default everywhere except US)
+    u                       # USCS (used by default in US)
+    M                       # show wind speed in m/s
 
 Usage:
   tenki [--language language] [--location location] [--path-to-png path/to/png] [--help]  [flags]

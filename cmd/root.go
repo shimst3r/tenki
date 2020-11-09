@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/shimst3r/tenki/lib"
 	"github.com/spf13/cobra"
 )
 
@@ -33,9 +34,12 @@ var Location string
 // PathToPng determines the path in which to save output as PNG.
 var PathToPng string
 
+// UnitOfMeasurement determines the output's unit of measurement
+var UnitOfMeasurement lib.Unit
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "tenki [--language language] [--location location] [--path-to-png path/to/png] [--help] ",
+	Use:   "tenki",
 	Short: "A command-line interface for wttr.in/",
 	Long: `Tenki is a CLI for querying weather information from wttr.in/ endpoints.
 
@@ -50,7 +54,13 @@ Supported location types:
     /muc                    # airport code (3 letters)
     /@stackoverflow.com     # domain name
     /94107                  # area codes
-    /-78.46,106.79          # GPS coordinates`,
+    /-78.46,106.79          # GPS coordinates
+
+Supported units of measurement:
+
+    m                       # metric (SI) (used by default everywhere except US)
+    u                       # USCS (used by default in US)
+    M                       # show wind speed in m/s`,
 	Run: GetWeather,
 }
 
@@ -64,7 +74,8 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVar(&Language, "language", "en", "Language to generate output in")
-	rootCmd.PersistentFlags().StringVar(&Location, "location", "", "Query location")
-	rootCmd.PersistentFlags().StringVar(&PathToPng, "path-to-png", "", "Location to store PNG output")
+	rootCmd.Flags().StringVar(&Language, "language", "en", "Language to generate output in")
+	rootCmd.Flags().StringVar(&Location, "location", "", "Query location")
+	rootCmd.Flags().StringVar(&PathToPng, "path-to-png", "", "Location to store PNG output")
+	rootCmd.Flags().Var(&UnitOfMeasurement, "unit", "Unit of measurement for outputs")
 }
