@@ -21,7 +21,7 @@ tenki --help
 ## Usage Examples
 
 ```shell
-$ ./tenki --help
+$ tenki --help
 Tenki is a CLI for querying weather information from wttr.in/ endpoints.
 
 Users can define their location based on various query parameters including
@@ -44,17 +44,18 @@ Supported units of measurement:
     M                       # show wind speed in m/s
 
 Usage:
-  tenki [--language language] [--location location] [--path-to-png path/to/png] [--help]  [flags]
+  tenki [flags]
 
 Flags:
   -h, --help                 help for tenki
       --language string      Language to generate output in (default "en")
       --location string      Query location
       --path-to-png string   Location to store PNG output
+      --unit                 Unit of measurement for outputs
 ```
 
 ```shell
-$ ./tenki --location Kyoto --language fr
+$ tenki --location Kyoto --language fr
 Prévisions météo pour: Kyoto
 
      \  /       Partiellement couvert
@@ -98,7 +99,7 @@ Emplacement: 京都市, 京都府, 日本 [35.0185804,135.763835]
 tenki also lets you store colored output as PNG, using the `--path-to-png` flag. It can be combined with any language or location specification, e.g.
 
 ```shell
-$ ./tenki --location ~Tokyo+Skytree --language de --path-to-png ./examples/TokyoSkytree.png
+$ tenki --location ~Tokyo+Skytree --language de --path-to-png ./examples/TokyoSkytree.png
 ```
 
 produces the following image:
