@@ -125,3 +125,7 @@ If you want to print the output to PNG, you have to use a [bind mount](https://d
 ```shell
 docker run --mount type=bind,source="$(pwd)"/examples,target=/examples tenki --location Hiroshima --language de --path-to-png ./examples/Hiroshima.png
 ```
+
+## Disclaimer
+
+I am not affiliated with [wttr.in]( https://wttr.in/ )
