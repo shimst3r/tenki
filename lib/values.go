@@ -1,8 +1,6 @@
 // Package lib implements common utility functions used in the tenki CLI.
 package lib
 
-import "fmt"
-
 /*
 Copyright © 2020 Nils Müller <shimst3r@gmail.com>
 
@@ -18,6 +16,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+import "fmt"
 
 // Unit defines possible units of measurement passed to the wttr.in API.
 type Unit struct {
